@@ -46,6 +46,9 @@ def resheto():
 
 cProfile.run('non_resheto()')
 # 990952 function calls in 0.338 seconds
+# difficulty is o(n)
 cProfile.run('resheto()')
 # 172 function calls in 0.001 seconds
+# difficulty is o(n**2)
+
 
