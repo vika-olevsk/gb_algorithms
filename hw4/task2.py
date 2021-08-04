@@ -5,50 +5,46 @@
 # Результаты анализа сохранить в виде комментариев в файле с кодом.
 
 import cProfile
-n = 1000
+n = 100
 
-all_nums = list(range(2,n+1))
 
 def non_resheto():
-    needed_nums = []
-    i = 2
-    while i < n:
-        for el in all_nums:
-            if i % el != 0:
-                needed_nums.append(i)
+    needed_nums = [2]
+    i = 3
+    while len(needed_nums) < n:
+        check = 0
+        for el in needed_nums:
+            if i % el == 0:
+                check = 1
+        if check == 0:
+            needed_nums.append(i)
         i += 1
+    #print(needed_nums)
+
 
 
 def resheto():
-    # Используя алгоритм «Решето Эратосфена»
-    a = [0] * n  
-    for i in range(n):  
-        a[i] = i  
-    a[1] = 0
+    black_list = []
+    white_list = []
+    x = 2
+    while len(white_list) < n:
+        if x not in black_list:
+            white_list.append(x)
+            for j in range(2,n*n):
+                black_list.append(x*j)
+        x += 1
+    #print(white_list)
 
-    m = 2  
-    while m < n:
-        if a[m] != 0: 
-            j = m * 2  
-            while j < n:
-                a[j] = 0  
-                j = j + m 
-        m += 1
 
-    b = []
-    for i in a:
-        if a[i] != 0:
-            b.append(a[i])
-    del a
-    #print(b)
+
 
 
 
 cProfile.run('non_resheto()')
-# 990952 function calls in 0.338 seconds
+# 643 function calls in 0.002 seconds
 # difficulty is o(n)
 cProfile.run('resheto()')
-# 172 function calls in 0.001 seconds
+# 1000445 function calls in 1.197 seconds
 # difficulty is o(n**2)
 
 
